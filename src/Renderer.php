@@ -5,19 +5,16 @@
  * @link https://github.com/lleocastro/view-renderer
  * @license https://github.com/lleocastro/view-renderer/blob/master/LICENSE
  * @copyright 2016 Leonardo Carvalho <leonardo_carvalho@outlook.com>
- * 
  */
 
 namespace View;
 
 use Psr\Http\Message\ResponseInterface;
-use InvalidArgumentException;
 use RuntimeException;
 
 /**
- * Class Renderer
- * @package lleocastro/view-renderer
- * @return object PSR-7 Response
+ * Object PSR-7 Response
+ * @package system/kernel/view/
  */
 class Renderer
 {
@@ -35,7 +32,7 @@ class Renderer
      * @param string $templatePath
      * @param array $attributes
      */
-    public function __construct($templatePath, $attributes = [])
+    public function __construct($templatePath, array $attributes = [])
     {
         if(substr($templatePath, -1) !== '/'):
             $templatePath .= '/';
@@ -51,9 +48,7 @@ class Renderer
      * @param ResponseInterface $response 
      * @param string $template
      * @param array $data
-     * 
      * @return ResponseInterface
-     * 
      */
     public function render(ResponseInterface $response, $template, array $data = [])
     {
@@ -69,10 +64,7 @@ class Renderer
      *
      * @param string $template
      * @param array $data
-     * 
-     * @throws InvalidArgumentException (não pode conter o template como dado)
      * @throws RuntimeException (retornará uma exceção caso o template não exista)
-     *
      * @return mixed
      */
     private function process($template, array $data = []) 
@@ -80,7 +72,7 @@ class Renderer
         $template = $this->templatePath . $template;
         
         /**
-        * Verifica se o template se encontra no caminho informado
+        * Verifica se o template se encontra no caminho indicado
         * @throws RuntimeException
         */
         if(!is_file($template)):
