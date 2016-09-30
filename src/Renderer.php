@@ -14,7 +14,7 @@ use RuntimeException;
 
 /**
  * Object PSR-7 Response
- * @package system/kernel/view/
+ * @package module/view/
  */
 class Renderer
 {
@@ -38,8 +38,8 @@ class Renderer
             $templatePath .= '/';
         endif;
 
-        $this->templatePath = $templatePath;
-        $this->attributes = array_map("htmlspecialchars", $attributes);
+        $this->setTemplatePath($templatePath);
+        $this->setAttributes($attributes);
     }
 
     /**
@@ -91,7 +91,43 @@ class Renderer
     protected function includeScope($template, array $data)
     {
         extract($data);
-        include $template;
+        require $template;
+    }
+
+    /**
+     * @param string $templatePath
+     * @return object
+    */
+    public function setTemplatePath($templatePath)
+    {
+        $this->templatePath = trim((string) $templatePath);
+        return $this;
     }
     
+    /**
+     * @return string
+    */
+    public function getTemplatePath()
+    {
+        return $this->templatePath;
+    }
+
+    /**
+     * @param array $attributes
+     * @return object
+    */
+    public function setAttributes(array $attributes)
+    {
+        $this->attributes = array_map("htmlspecialchars", $attributes);
+        return $this;
+    }
+
+    /**
+     * @return array
+    */
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
+
 }
